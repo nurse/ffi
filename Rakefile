@@ -65,7 +65,8 @@ OS = case RbConfig::CONFIG['host_os'].downcase
     RbConfig::CONFIG['host_os'].downcase
   end
 
-GMAKE = system('which gmake >/dev/null') && 'gmake' || 'make'
+GMAKE =
+# system('which gmake >/dev/null') && 'gmake' || 'make'
 
 LIBTEST = "build/libtest.#{LIBEXT}"
 BUILD_DIR = "build"
@@ -175,7 +176,7 @@ if USE_RAKE_COMPILER
     ext.cross_platform = %w[i386-mingw32 x64-mingw32]                     # forces the Windows platform instead of the default one
   end
 
-  ENV['RUBY_CC_VERSION'] ||= '1.9.3:2.0.0:2.1.6:2.2.2:2.3.0'
+  #ENV['RUBY_CC_VERSION'] ||= '1.9.3:2.0.0:2.1.6:2.2.2:2.3.0'
 
   # To reduce the gem file size strip mingw32 dlls before packaging
   ENV['RUBY_CC_VERSION'].to_s.split(':').each do |ruby_version|

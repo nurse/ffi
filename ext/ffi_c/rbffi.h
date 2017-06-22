@@ -49,6 +49,13 @@ extern VALUE rbffi_AbstractMemoryClass, rbffi_InvokerClass;
 extern int rbffi_type_size(VALUE type);
 extern void rbffi_Thread_Init(VALUE moduleFFI);
 
+#if defined _MSC_VER && !defined FFI_BUILDING
+#include <ffi.h>
+/* redefine to avoid using extern for struct */
+#undef FFI_EXTERN
+#define FFI_EXTERN __declspec(dllimport)
+#endif
+
 #ifdef	__cplusplus
 }
 #endif

@@ -580,11 +580,11 @@ async_cb_event(void* unused)
     while (true) {
         struct gvl_callback* cb;
         char buf[64];
-        fd_set rfds;
+        rb_fdset_t rfds;
 
-        FD_ZERO(&rfds);
-        FD_SET(async_cb_pipe[0], &rfds);
-        rb_thread_select(async_cb_pipe[0] + 1, &rfds, NULL, NULL, NULL);
+        rb_fdset_init(&rfds);
+        rb_fd_set(async_cb_pipe[0], &rfds);
+        rb_thread_fd_select(async_cb_pipe[0] + 1, &rfds, NULL, NULL, NULL);
         read(async_cb_pipe[0], buf, sizeof(buf));
 
         EnterCriticalSection(&async_cb_lock);

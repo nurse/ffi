@@ -238,11 +238,11 @@ wait_for_thread(void *data)
 {
     struct BlockingThread* thr = (struct BlockingThread *) data;
     char c, res;
-    fd_set rfds;
+    rb_fdset_t rfds;
 
-    FD_ZERO(&rfds);
-    FD_SET(thr->rdfd, &rfds);
-    rb_thread_select(thr->rdfd + 1, &rfds, NULL, NULL, NULL);
+    rb_fdset_init(&rfds);
+    rb_fd_set(thr->rdfd, &rfds);
+    rb_thread_fd_select(thr->rdfd + 1, &rfds, NULL, NULL, NULL);
     read(thr->rdfd, &c, 1);
     return Qnil;
 }
